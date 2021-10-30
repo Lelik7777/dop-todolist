@@ -11,13 +11,13 @@ export type TaskType = {
 }
 
 type PropsType = {
-    title: string
+    title0: string
     tasks: Array<TaskType>
     removeTask: (taskId: string) => void
-    addTask: (title: string) => void
+    addTask0: (title: string) => void
 }
 
-export function Todolist(props: PropsType) {
+export function Todolist({tasks, title0, removeTask, addTask0}: PropsType) {
     const [filterTasks, setFilterTasks] = useState<FilterValuesType>('all');
 
     const [title, setTitle] = useState('');
@@ -28,22 +28,22 @@ export function Todolist(props: PropsType) {
     const funFilterTasks = (f: FilterValuesType) => {
         switch (f) {
             case 'active':
-                return props.tasks.filter(x => !x.isDone);
+                return tasks.filter(x => !x.isDone);
             case 'completed':
-                return props.tasks.filter(x => x.isDone);
+                return tasks.filter(x => x.isDone);
             default:
-                return props.tasks;
+                return tasks;
         }
     }
     const addTask = () => {
-        props.addTask(title);
+        addTask0(title);
         setTitle('');
     }
-    const onClickHandler = (id: string) => props.removeTask(id);
+    const onClickHandler = (id: string) => removeTask(id);
     return <div>
-        <h3>{props.title}</h3>
+        <h3>{title0}</h3>
 
-        <Input callBack={props.addTask} title={title} setTitle={setTitle}/>
+        <Input callBack={addTask} title={title} setTitle={setTitle}/>
         <Button callBack={addTask} name={'+'}/>
         <MappedUl callback={onClickHandler} tasks={funFilterTasks(filterTasks)}/>
         <div>

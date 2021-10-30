@@ -4,15 +4,15 @@ import {Button} from './Button';
 type PropsType = {
     callBack: (title: string) => void;
 }
-export const FullInput = (props: PropsType) => {
+export const FullInput = ({callBack}: PropsType) => {
     const [title, setTitle] = useState('');
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
-            props.callBack(title);
+            callBack(title);
         }
     }
     const addTask = () => {
-        props.callBack(title);
+        callBack(title);
         setTitle('');
     }
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {

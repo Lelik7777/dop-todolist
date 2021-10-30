@@ -29,10 +29,10 @@ function App() {
 
     return (
         <div className="App">
-            <Todolist title="What to learn"
+            <Todolist title0="What to learn"
                       tasks={tasks}
                       removeTask={removeTask}
-                      addTask={addTask}/>
+                      addTask0={addTask}/>
         </div>
     );
 }
