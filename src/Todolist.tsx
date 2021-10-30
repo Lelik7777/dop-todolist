@@ -2,8 +2,9 @@ import React, {useState} from 'react';
 import {FilterValuesType} from './App';
 import {Button} from './components/Button';
 import {Input} from './components/Input';
+import {MappedUl} from './components/MapipedUl';
 
-type TaskType = {
+export type TaskType = {
     id: string
     title: string
     isDone: boolean
@@ -44,17 +45,7 @@ export function Todolist(props: PropsType) {
 
         <Input callBack={props.addTask} title={title} setTitle={setTitle}/>
         <Button callBack={addTask} name={'+'}/>
-        <ul>
-            {
-                funFilterTasks(filterTasks)?.map(t => {
-                    return <li key={t.id}>
-                        <input type="checkbox" checked={t.isDone}/>
-                        <span>{t.title}</span>
-                        <Button callBack={() => onClickHandler(t.id)} name={'x'}/>
-                    </li>
-                })
-            }
-        </ul>
+        <MappedUl callback={onClickHandler} tasks={funFilterTasks(filterTasks)}/>
         <div>
             <Button callBack={() => filter('all')} name={'all'}/>
             <Button callBack={() => filter('active')} name={'active'}/>
@@ -62,4 +53,3 @@ export function Todolist(props: PropsType) {
         </div>
     </div>
 }
-

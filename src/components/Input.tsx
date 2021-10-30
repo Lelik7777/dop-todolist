@@ -17,13 +17,11 @@ export const Input = ({title, setTitle, callBack, ...props}: PropsType) => {
         setTitle(e.currentTarget.value)
     }
     return (
-        <div>
             <input
                 type="text"
                 value={title}
                 onChange={onChangeHandler}
                 onKeyPress={onKeyPressHandler}
             />
-        </div>
     )
 }
