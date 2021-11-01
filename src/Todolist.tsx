@@ -40,16 +40,21 @@ export function Todolist({tasks, title0, removeTask, addTask0}: PropsType) {
         setTitle('');
     }
     const onClickHandler = (id: string) => removeTask(id);
+    const callBack = () => filter('all');
+    const callBack1 = () => filter('active');
+    const callBack2 = () => filter('completed');
     return <div>
         <h3>{title0}</h3>
 
         <Input callBack={addTask} title={title} setTitle={setTitle}/>
         <Button callBack={addTask} name={'+'}/>
+
         <MappedUl callback={onClickHandler} tasks={funFilterTasks(filterTasks)}/>
+
         <div>
-            <Button callBack={() => filter('all')} name={'all'}/>
-            <Button callBack={() => filter('active')} name={'active'}/>
-            <Button callBack={() => filter('completed')} name={'completed'}/>
+            <Button callBack={callBack} name={'all'}/>
+            <Button callBack={callBack1} name={'active'}/>
+            <Button callBack={callBack2} name={'completed'}/>
         </div>
     </div>
 }
