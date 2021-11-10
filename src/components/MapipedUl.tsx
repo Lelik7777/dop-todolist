@@ -1,7 +1,8 @@
 import {Button} from './Button';
 import React from 'react';
-import {TaskType} from '../Todolist';
+
 import {InputCheckBox} from './InputCheckBox';
+import {TaskType} from '../App';
 
 type PropsType = {
     tasks: TaskType[];
