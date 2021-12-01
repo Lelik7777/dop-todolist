@@ -8,6 +8,7 @@ type PropsType = {
     checked?:boolean;
 }
 export const Input = ({type, value, callBack1, callBack2,checked, ...props}: PropsType) => {
+    console.log('rendering input');
     return (
         <input
             type={type}
