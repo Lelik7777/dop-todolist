@@ -1,6 +1,6 @@
 import {FilterValuesType} from '../../App';
-
-export  const filterReducer = (state:FilterValuesType,action:ChangeFilterType) => {
+let initialFilter:FilterValuesType='all';
+export  const filterReducer = (state:FilterValuesType=initialFilter,action:ChangeFilterType):FilterValuesType => {
   switch (action.type) {
       case 'CHANGE-FILTER':
           return action.value

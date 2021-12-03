@@ -1,6 +1,9 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {FilterValuesType} from './App';
 import styles from './Todolist.module.css'
+import {useDispatch, useSelector} from 'react-redux';
+import {RootReducerType} from './components/redux/store';
+import {changeFilterAC} from './components/redux/filterReducer';
 
 export type TaskType = {
     id: string
@@ -10,18 +13,32 @@ export type TaskType = {
 
 type PropsType = {
     title: string
-    tasks: Array<TaskType>
+    //tasks: Array<TaskType>
     removeTask: (taskId: string) => void
-    changeFilter: (value: FilterValuesType) => void
+   // changeFilter: (value: FilterValuesType) => void
     addTask: (title: string) => void
     changeStatus: (CurrentId: string, value: boolean) => void
-    filter:FilterValuesType
+    //filter:FilterValuesType
 }
 
-export function Todolist({filter,...props}: PropsType) {
+export function Todolist({...props}: PropsType) {
+    let tasks = useSelector<RootReducerType, TaskType[]>(state => state.tasks);
+    let filter=useSelector<RootReducerType,FilterValuesType>(state => state.filter)
     let [title, setTitle] = useState("")
+    let dispatch = useDispatch();
     const [error, setError] = useState<string|boolean>(false)
+    let tasksForTodolist = tasks;
 
+    if (filter === 'active') {
+        tasksForTodolist = tasks.filter(t => t.isDone === false);
+    }
+    if (filter === 'completed') {
+        tasksForTodolist = tasks.filter(t => t.isDone === true);
+    }
+    function changeFilter(value: FilterValuesType) {
+        //filterDispatch(changeFilterAC(value));
+        dispatch(changeFilterAC(value));
+    }
     const addTask = () => {
         if (title.trim()) {
             props.addTask(title.trim());
@@ -49,9 +66,9 @@ export function Todolist({filter,...props}: PropsType) {
         }
     }
 
-    const onAllClickHandler = () => props.changeFilter("all");
-    const onActiveClickHandler = () => props.changeFilter("active");
-    const onCompletedClickHandler = () => props.changeFilter("completed");
+    const onAllClickHandler = () => changeFilter("all");
+    const onActiveClickHandler = () => changeFilter("active");
+    const onCompletedClickHandler = () => changeFilter("completed");
 
     const onChangeHandlerForChangeStatus=(CurrentId: string,event:ChangeEvent<HTMLInputElement>)=>{
         props.changeStatus(CurrentId,event.currentTarget.checked)
@@ -66,7 +83,7 @@ export function Todolist({filter,...props}: PropsType) {
         </div>
         <ul>
             {
-                props.tasks.map(t => {
+                tasks.map(t => {
                     const onClickHandler = () => props.removeTask(t.id)
                     // const onChangeHandlerForChangeStatus = (event: ChangeEvent<HTMLInputElement>) => {
                     //     props.changeStatus(t.id, event.currentTarget.checked)

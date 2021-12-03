@@ -1,7 +1,11 @@
 import {TaskType} from '../../Todolist';
 import {v1} from 'uuid';
-
-export const taskReducer = (state: TaskType[], action: ActionType) => {
+let initialState:TaskType[]=[{id: v1(), title: 'HTML&CSS', isDone: true},
+    {id: v1(), title: 'JS', isDone: true},
+    {id: v1(), title: 'ReactJS', isDone: false},
+    {id: v1(), title: 'Rest API', isDone: false},
+    {id: v1(), title: 'GraphQL', isDone: false},]
+export const taskReducer = (state: TaskType[]=initialState, action: ActionType):TaskType[] => {
     switch (action.type) {
         case 'REMOVE-TASKS':
             return state.filter(t => t.id !== action.payload.id);
